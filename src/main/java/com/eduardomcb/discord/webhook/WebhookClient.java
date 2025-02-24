@@ -48,7 +48,7 @@ public class WebhookClient {
 
             // Get the HTTP response code
             int responseCode = connection.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
+            // System.out.println("Response Code: " + responseCode);
 
             // Handle response based on response code
             if (responseCode == HttpsURLConnection.HTTP_OK || responseCode == HttpsURLConnection.HTTP_NO_CONTENT) {
@@ -57,7 +57,7 @@ public class WebhookClient {
                 handleErrorResponse(connection, responseCode);
             }
         } catch (IOException | URISyntaxException e) {
-            System.err.println("I/O Error: " + e.getMessage());
+            // System.err.println("I/O Error: " + e.getMessage());
             callback.onFailure(-1, e.getMessage());
         }
     }
