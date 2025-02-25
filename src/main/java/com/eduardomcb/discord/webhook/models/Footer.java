@@ -1,9 +1,11 @@
 package com.eduardomcb.discord.webhook.models;
 
-import org.json.JSONObject;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-public class Footer {
+import com.eduardomcb.discord.webhook.JSONType;
+
+public class Footer implements JSONType.Object{
 	
 	private String text;
 	private String icon_url;
@@ -13,7 +15,8 @@ public class Footer {
 		this.icon_url = icon_url;
 	}
 	
-	public JSONObject get() {
+	@Override
+	public JSONObject toJson() {
 		JSONObject obj = new JSONObject();
 		try {
 			obj.put("text", this.text);

@@ -1,21 +1,24 @@
 package com.eduardomcb.discord.webhook.models;
 
-import org.json.JSONObject;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-public class Image {
-	
+import com.eduardomcb.discord.webhook.JSONType;
+
+public class Image implements JSONType.Object {
+
 	private String url;
-	
+
 	public Image(String url) {
 		this.url = url;
 	}
-	
-	public JSONObject get() {
+
+	@Override
+	public JSONObject toJson() {
 		JSONObject obj = new JSONObject();
 		try {
 			obj.put("url", this.url);
-		} catch(JSONException e) {
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return obj;

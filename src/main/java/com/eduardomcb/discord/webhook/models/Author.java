@@ -1,9 +1,11 @@
 package com.eduardomcb.discord.webhook.models;
 
-import org.json.JSONObject;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-public class Author {
+import com.eduardomcb.discord.webhook.JSONType;
+
+public class Author implements JSONType.Object {
 	
 	private String name;
 	private String url;
@@ -15,7 +17,8 @@ public class Author {
 		this.icon = icon;
 	}
 	
-	public JSONObject get() {
+	@Override
+	public JSONObject toJson() {
 		JSONObject obj = new JSONObject();
 		try {
 			obj.put("name", this.name);
