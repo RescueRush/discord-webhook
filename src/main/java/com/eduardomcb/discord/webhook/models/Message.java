@@ -14,6 +14,10 @@ public class Message implements JSONType.Object {
 	public Message() {
 	}
 
+	public Message(String content) {
+		this.content = content;
+	}
+
 	public String getUsername() {
 		return username;
 	}

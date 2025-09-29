@@ -21,15 +21,14 @@ public class WebhookClient {
 	}
 
 	public WebhookClient(String webhookUrl) {
-		this.webhookUrl = webhookUrl;
+		setChannelUrl(webhookUrl);
 	}
 
 	/**
 	 * Sets the webhook URL for a channel.
 	 *
 	 * @param webhookUrl The webhook URL to be set for the channel.
-	 * @return An instance of WebhookManager with the updated webhook URL if the
-	 *         provided URL is valid.
+	 * @return An instance of WebhookManager with the updated webhook URL if the provided URL is valid.
 	 */
 	public WebhookClient setChannelUrl(String webhookUrl) {
 		/**
@@ -67,24 +66,24 @@ public class WebhookClient {
 	protected WebhookClient send(JSONObject message, Consumer<Exception> failure, Consumer<String> success) {
 		try {
 			// Create a URI object from the provided webhook URL
-			URI uri = new URI(webhookUrl);
+			final URI uri = new URI(webhookUrl);
 
 			// Open a connection to the webhook URL
-			HttpsURLConnection connection = (HttpsURLConnection) uri.toURL().openConnection();
+			final HttpsURLConnection connection = (HttpsURLConnection) uri.toURL().openConnection();
 			connection.setRequestProperty("Content-Type", "application/json");
-			String userAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
+			final String userAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
 			connection.setRequestProperty("User-Agent", userAgent);
 
 			// Enable output for sending POST data
 			connection.setDoOutput(true);
 
 			// Write the JSON message to the connection's output stream
-			try (OutputStream stream = connection.getOutputStream()) {
+			try (final OutputStream stream = connection.getOutputStream()) {
 				stream.write(message.toString().getBytes(StandardCharsets.UTF_8));
 			}
 
 			// Get the HTTP response code
-			int responseCode = connection.getResponseCode();
+			final int responseCode = connection.getResponseCode();
 			// System.out.println("Response Code: " + responseCode);
 
 			// Handle response based on response code
@@ -136,10 +135,11 @@ public class WebhookClient {
 	 * @throws IOException If an I/O error occurs while reading the error response.
 	 */
 	private void handleErrorResponse(HttpsURLConnection connection, int responseCode, Consumer<Exception> failure) throws IOException {
-		try (BufferedReader errorReader = new BufferedReader(new InputStreamReader(responseCode == HttpsURLConnection.HTTP_NOT_FOUND ? connection.getErrorStream() : connection.getInputStream()))) {
+		try (final BufferedReader errorReader = new BufferedReader(new InputStreamReader(
+				responseCode == HttpsURLConnection.HTTP_NOT_FOUND ? connection.getErrorStream() : connection.getInputStream()))) {
 
 			String errorInputLine;
-			StringBuilder errorResponse = new StringBuilder();
+			final StringBuilder errorResponse = new StringBuilder();
 
 			while ((errorInputLine = errorReader.readLine()) != null) {
 				errorResponse.append(errorInputLine);

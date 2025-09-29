@@ -19,11 +19,27 @@ public class WebhookPacket implements JSONType.Object {
 	public WebhookPacket() {
 	}
 
+	public WebhookPacket(Message message, Embed... embeds) {
+		this.embeds = embeds;
+		this.message = message;
+	}
+
+	public WebhookPacket(Embed... embeds) {
+		this.embeds = embeds;
+	}
+
+	public WebhookPacket(Message message) {
+		this.message = message;
+	}
+
+	public WebhookPacket(String msg) {
+		this.message = new Message(msg);
+	}
+
 	/**
 	 * Sets the message content and other details.
 	 *
-	 * @param message The message object containing username, avatar URL, and
-	 *                content.
+	 * @param message The message object containing username, avatar URL, and content.
 	 * @return An instance of WebhookManager with the updated message details.
 	 */
 	public WebhookPacket setMessage(Message message) {
@@ -77,8 +93,7 @@ public class WebhookPacket implements JSONType.Object {
 	}
 
 	/**
-	 * Handles JSON-related exceptions by logging them and invoking the onFailure
-	 * callback.
+	 * Handles JSON-related exceptions by logging them and invoking the onFailure callback.
 	 *
 	 * @param e The JSONException that occurred.
 	 */
